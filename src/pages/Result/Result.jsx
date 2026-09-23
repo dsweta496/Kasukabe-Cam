@@ -104,6 +104,36 @@ const drawContainedImage = (
 
     context.save()
 
+    /*
+     * ---------------------------------
+     * CLIP PHOTO TO ITS FRAME SLOT
+     * ---------------------------------
+     *
+     * MakeStrip.jsx uses an overflow-hidden
+     * container around each photo slot.
+     *
+     * Canvas does not have that automatic
+     * clipping, so we reproduce it here.
+     *
+     * Anything outside this rectangle will
+     * be discarded, even when the photo is
+     * scaled, moved, or rotated.
+     */
+    context.beginPath()
+
+    context.rect(
+        x,
+        y,
+        width,
+        height,
+    )
+
+    context.clip()
+
+    /*
+     * Apply the user's photo transform
+     * inside the clipped slot.
+     */
     context.translate(
         centerX + offsetX,
         centerY + offsetY,
