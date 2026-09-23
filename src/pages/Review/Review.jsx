@@ -1,15 +1,10 @@
 import { useEffect, useState } from "react"
 import {
     ArrowLeft,
-    ArrowRight,
     Camera as CameraIcon,
     Eye,
-    Palette,
-    PawPrint,
+    RefreshCw,
     RotateCcw,
-    ScanFace,
-    Smile,
-    Sparkles,
     X,
 } from "lucide-react"
 import { useNavigate } from "react-router-dom"
@@ -21,29 +16,6 @@ import {
     getPhotos,
     savePhotos,
 } from "../../utils/photoStore"
-
-const LENS_OPTIONS = [
-    {
-        id: null,
-        label: "Original",
-        icon: Sparkles,
-    },
-    {
-        id: "a4d4f38d-66ea-42aa-b681-ed225e26dbdc",
-        label: "Beauty",
-        icon: Sparkles,
-    },
-    {
-        id: "d84e5da6-b901-46ab-83f4-e11492a2c3e6",
-        label: "Rosy",
-        icon: Palette,
-    },
-    {
-        id: "a72a3a8b-f6b5-4639-b2da-7fe0c110127f",
-        label: "Mono",
-        icon: ScanFace,
-    },
-]
 
 function Review() {
     const navigate = useNavigate()
@@ -148,128 +120,31 @@ function Review() {
     }
 
     const renderCameraControls = ({
-        selectedLensId,
         cameraReady,
-        lensSwitching,
-        changeLens,
         startCountdown,
         photoCount,
-        onReview,
+        flipCamera,
     }) => (
         <>
-            {/* Desktop lens controls */}
+            {/* ───────────────── Desktop camera controls ───────────────── */}
+
             <div
                 className="
-                    pointer-events-auto
-                    absolute
-                    left-0
-                    top-1/2
-                    z-30
-                    hidden
-                    -translate-y-1/2
-                    sm:block
-                    lg:left-2
-                "
+                pointer-events-auto
+                absolute
+                right-0
+                top-1/2
+                z-30
+                hidden
+                -translate-y-1/2
+                flex-col
+                items-center
+                gap-3
+                sm:flex
+                lg:right-2
+            "
             >
-                <div
-                    className="
-                        flex
-                        flex-col
-                        items-center
-                        rounded-full
-                        border
-                        border-white/40
-                        bg-white/30
-                        px-1.5
-                        py-2
-                        shadow-[0_8px_30px_rgba(69,52,45,0.12)]
-                        backdrop-blur-xl
-                    "
-                >
-                    {LENS_OPTIONS.map((option) => {
-                        const Icon = option.icon
-                        const isSelected =
-                            selectedLensId === option.id
-
-                        return (
-                            <button
-                                key={option.label}
-                                type="button"
-                                onClick={() =>
-                                    changeLens(option.id)
-                                }
-                                disabled={
-                                    !cameraReady ||
-                                    lensSwitching
-                                }
-                                className={`
-                                    flex
-                                    h-14
-                                    w-14
-                                    flex-col
-                                    items-center
-                                    justify-center
-                                    gap-0.5
-                                    rounded-full
-                                    text-[#45342d]
-                                    transition
-                                    hover:bg-white/20
-                                    disabled:opacity-50
-                                    sm:h-16
-                                    sm:w-16
-                                    ${isSelected
-                                        ? "bg-white/30"
-                                        : ""
-                                    }
-                                `}
-                            >
-                                <span
-                                    className={`
-                                        flex
-                                        h-8
-                                        w-8
-                                        items-center
-                                        justify-center
-                                        rounded-full
-                                        border
-                                        ${isSelected
-                                            ? "border-white/80 bg-white/30"
-                                            : "border-white/45 bg-white/15"
-                                        }
-                                    `}
-                                >
-                                    <Icon
-                                        size={16}
-                                        strokeWidth={1.5}
-                                    />
-                                </span>
-
-                                <span className="text-[7px] uppercase tracking-[0.08em] sm:text-[8px]">
-                                    {option.label}
-                                </span>
-                            </button>
-                        )
-                    })}
-                </div>
-            </div>
-
-            {/* Desktop camera controls */}
-            <div
-                className="
-                    pointer-events-auto
-                    absolute
-                    right-0
-                    top-1/2
-                    z-30
-                    hidden
-                    -translate-y-1/2
-                    flex-col
-                    items-center
-                    gap-3
-                    sm:flex
-                    lg:right-2
-                "
-            >
+                {/* Take photo */}
 
                 <div className="flex flex-col items-center">
                     <button
@@ -277,28 +152,27 @@ function Review() {
                         onClick={startCountdown}
                         disabled={
                             !cameraReady ||
-                            lensSwitching ||
                             photoCount >= 4
                         }
                         className="
-                            flex
-                            h-[78px]
-                            w-[78px]
-                            items-center
-                            justify-center
-                            rounded-full
-                            border-[4px]
-                            border-white
-                            bg-white/25
-                            text-[#45342d]
-                            shadow-[0_8px_28px_rgba(69,52,45,0.15)]
-                            backdrop-blur-md
-                            transition
-                            hover:scale-105
-                            hover:bg-white/40
-                            active:scale-95
-                            disabled:opacity-40
-                        "
+                        flex
+                        h-[78px]
+                        w-[78px]
+                        items-center
+                        justify-center
+                        rounded-full
+                        border-[4px]
+                        border-white
+                        bg-white/25
+                        text-[#45342d]
+                        shadow-[0_8px_28px_rgba(69,52,45,0.15)]
+                        backdrop-blur-md
+                        transition
+                        hover:scale-105
+                        hover:bg-white/40
+                        active:scale-95
+                        disabled:opacity-40
+                    "
                         aria-label="Take photo"
                     >
                         <CameraIcon
@@ -307,174 +181,105 @@ function Review() {
                         />
                     </button>
 
-                    <span className="mt-1.5 font-serif text-[9px] tracking-[0.12em] text-[#45342d]">
+                    <span className="
+                    mt-1.5
+                    font-serif
+                    text-[9px]
+                    tracking-[0.12em]
+                    text-[#45342d]
+                ">
                         Take Photo
                     </span>
                 </div>
 
+                {/* Flip camera */}
+
                 <div className="flex flex-col items-center">
                     <button
                         type="button"
-                        onClick={() =>
-                            changeLens(null)
-                        }
-                        disabled={
-                            !cameraReady ||
-                            lensSwitching ||
-                            selectedLensId === -1
-                        }
+                        onClick={flipCamera}
+                        disabled={!cameraReady}
                         className="
-                            flex
-                            h-11
-                            w-11
-                            items-center
-                            justify-center
-                            rounded-full
-                            border
-                            border-white/50
-                            bg-white/25
-                            text-[#45342d]
-                            backdrop-blur-md
-                            transition
-                            hover:bg-white/40
-                            active:scale-90
-                            disabled:opacity-40
-                        "
-                        aria-label="Reset lens"
+                        flex
+                        h-11
+                        w-11
+                        items-center
+                        justify-center
+                        rounded-full
+                        border
+                        border-white/50
+                        bg-white/25
+                        text-[#45342d]
+                        backdrop-blur-md
+                        transition
+                        hover:bg-white/40
+                        active:scale-90
+                        disabled:opacity-40
+                    "
+                        aria-label="Flip camera"
                     >
-                        <RotateCcw
+                        <RefreshCw
                             size={17}
                             strokeWidth={1.5}
                         />
                     </button>
 
-                    <span className="mt-1 font-serif text-[9px] tracking-[0.12em] text-[#45342d]/75">
-                        Switch
+                    <span className="
+                    mt-1
+                    font-serif
+                    text-[9px]
+                    tracking-[0.12em]
+                    text-[#45342d]/75
+                ">
+                        Flip
                     </span>
                 </div>
-
             </div>
 
-            {/* Mobile lens controls */}
+
+            {/* ───────────────── Mobile camera controls ───────────────── */}
+
             <div
                 className="
-                    pointer-events-auto
-                    absolute
-                    left-1/2
-                    top-[calc(54vw+22px)]
-                    z-30
-                    flex
-                    w-[calc(100%-16px)]
-                    -translate-x-1/2
-                    justify-center
-                    sm:hidden
-                "
+                pointer-events-auto
+                absolute
+                left-1/2
+                top-[calc(54vw+22px)]
+                z-30
+                flex
+                -translate-x-1/2
+                items-center
+                justify-center
+                gap-2
+                sm:hidden
+            "
             >
-                <div
-                    className="
-                        flex
-                        items-center
-                        justify-center
-                        gap-0.5
-                        rounded-full
-                        border
-                        border-white/45
-                        bg-white/30
-                        px-1
-                        py-1
-                        shadow-[0_6px_20px_rgba(69,52,45,0.10)]
-                        backdrop-blur-xl
-                    "
-                >
-                    {LENS_OPTIONS.map((option) => {
-                        const Icon = option.icon
-                        const isSelected =
-                            selectedLensId === option.id
-
-                        return (
-                            <button
-                                key={option.label}
-                                type="button"
-                                onClick={() =>
-                                    changeLens(option.id)
-                                }
-                                disabled={
-                                    !cameraReady ||
-                                    lensSwitching
-                                }
-                                className={`
-                                    flex
-                                    h-11
-                                    w-11
-                                    flex-col
-                                    items-center
-                                    justify-center
-                                    rounded-full
-                                    text-[#45342d]
-                                    transition
-                                    disabled:opacity-50
-                                    ${isSelected
-                                        ? "bg-white/35"
-                                        : "hover:bg-white/20"
-                                    }
-                                `}
-                            >
-                                <Icon
-                                    size={13}
-                                    strokeWidth={1.5}
-                                />
-
-                                <span className="mt-0.5 text-[5px] uppercase tracking-[0.02em]">
-                                    {option.label}
-                                </span>
-                            </button>
-                        )
-                    })}
-                </div>
-            </div>
-
-            {/* Mobile camera controls */}
-            <div
-                className="
-                    pointer-events-auto
-                    absolute
-                    left-1/2
-                    top-[calc(54vw+82px)]
-                    z-30
-                    flex
-                    -translate-x-1/2
-                    items-center
-                    justify-center
-                    gap-2
-                    sm:hidden
-                "
-            >
+                {/* Take photo */}
 
                 <button
                     type="button"
                     onClick={startCountdown}
                     disabled={
                         !cameraReady ||
-                        lensSwitching ||
                         photoCount >= 4
                     }
                     className="
-                        flex
-                        h-14
-                        w-14
-                        items-center
-                        justify-center
-                        rounded-full
-                        border-[3px]
-                        border-white
-                        bg-white/25
-                        text-[#45342d]
-                        shadow-[0_6px_20px_rgba(69,52,45,0.12)]
-                        backdrop-blur-md
-                        transition
-                        active:scale-95
-                        disabled:opacity-40
-                    "
+                    flex
+                    h-14
+                    w-14
+                    items-center
+                    justify-center
+                    rounded-full
+                    border-[3px]
+                    border-white
+                    bg-white/25
+                    text-[#45342d]
+                    shadow-[0_6px_20px_rgba(69,52,45,0.12)]
+                    backdrop-blur-md
+                    transition
+                    active:scale-95
+                    disabled:opacity-40
+                "
                     aria-label="Take photo"
                 >
                     <CameraIcon
@@ -483,38 +288,36 @@ function Review() {
                     />
                 </button>
 
+                {/* Flip camera */}
+
                 <button
                     type="button"
-                    onClick={() =>
-                        changeLens(null)
-                    }
-                    disabled={
-                        !cameraReady ||
-                        lensSwitching ||
-                        selectedLensId === -1
-                    }
+                    onClick={flipCamera}
+                    disabled={!cameraReady}
                     className="
-                        flex
-                        h-10
-                        w-10
-                        items-center
-                        justify-center
-                        rounded-full
-                        border
-                        border-white/45
-                        bg-white/25
-                        text-[#45342d]
-                        backdrop-blur-md
-                        disabled:opacity-40
-                    "
-                    aria-label="Reset lens"
+                    flex
+                    h-10
+                    w-10
+                    items-center
+                    justify-center
+                    rounded-full
+                    border
+                    border-white/45
+                    bg-white/25
+                    text-[#45342d]
+                    backdrop-blur-md
+                    transition
+                    hover:bg-white/40
+                    active:scale-90
+                    disabled:opacity-40
+                "
+                    aria-label="Flip camera"
                 >
-                    <RotateCcw
+                    <RefreshCw
                         size={15}
                         strokeWidth={1.5}
                     />
                 </button>
-
             </div>
         </>
     )

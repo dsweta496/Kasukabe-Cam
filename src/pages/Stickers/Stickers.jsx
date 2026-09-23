@@ -473,6 +473,7 @@ function Stickers() {
         event,
         corner,
     ) => {
+         event.preventDefault()
         event.stopPropagation()
 
         const sticker = stickers.find(
@@ -1208,6 +1209,7 @@ function Stickers() {
                                                 className="
                                                     absolute
                                                     z-50
+                                                    touch-none
                                                 "
                                                 style={{
                                                     left: `${sticker.x}%`,
@@ -1342,8 +1344,9 @@ function Stickers() {
                                                                         }
                                                                         className={`
                                                                             absolute
-                                                                            h-3
-                                                                            w-3
+                                                                            h-4
+                                                                            w-4
+                                                                            touch-none
                                                                             rounded-full
                                                                             border-2
                                                                             border-white
@@ -1352,25 +1355,25 @@ function Stickers() {
 
                                                                             ${corner ===
                                                                                 "top-left"
-                                                                                ? "-left-[7px] -top-[7px]"
+                                                                                ? "-left-[8px] -top-[8px]"
                                                                                 : ""
                                                                             }
 
                                                                             ${corner ===
                                                                                 "top-right"
-                                                                                ? "-right-[7px] -top-[7px]"
+                                                                                ? "-right-[8px] -top-[8px]"
                                                                                 : ""
                                                                             }
 
                                                                             ${corner ===
                                                                                 "bottom-left"
-                                                                                ? "-bottom-[7px] -left-[7px]"
+                                                                                ? "-bottom-[8px] -left-[8px]"
                                                                                 : ""
                                                                             }
 
                                                                             ${corner ===
                                                                                 "bottom-right"
-                                                                                ? "-bottom-[7px] -right-[7px]"
+                                                                                ? "-bottom-[8px] -right-[8px]"
                                                                                 : ""
                                                                             }
                                                                         `}
