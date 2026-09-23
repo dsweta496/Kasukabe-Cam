@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+@theme{
+  --color-kasukabe-sky: #0d8bf9;
+  --color-sakura: #f5a7b8;
+  --color-blossom: #e97891;
+  --color-cream: #fff8e8;
+  --color-sun: #ffd85a;
+  --color-leaf: #5c9b55;
+  --color-terracotta: #d88955;
+  --color-ink: #45342d;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #fff8e8;
+  color: #45342d;
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+@keyframes loading {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  50% {
+    transform: translateX(200%);
+  }
+
+  100% {
+    transform: translateX(300%);
+  }
+}
