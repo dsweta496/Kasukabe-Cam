@@ -12,7 +12,7 @@ import {
 } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 
-import kasukabeBg from "../../assets/kasukabe_photobooth.png"
+import kasukabeBg from "../../assets/Kasukabe_photobooth.png"
 import {
     FRAME_CATALOG,
     FRAME_WIDTH,
