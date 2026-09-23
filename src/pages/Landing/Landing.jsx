@@ -156,7 +156,7 @@ function Landing() {
                             sm:text-[15px]
                         "
                     >
-                        Because apparently I never take you to photobooths.
+                        Because apparently I never take my Saanu to photobooths.
                     </p>
 
                     {/* Let's Snap */}
@@ -223,7 +223,7 @@ function Landing() {
             </div>
 
             {/* Bottom Navigation */}
-            <nav
+            {/* <nav
                 className="
                     absolute
                     bottom-7
@@ -259,7 +259,7 @@ function Landing() {
                         {item}
                     </button>
                 ))}
-            </nav>
+            </nav> */}
         </main>
     )
 }
